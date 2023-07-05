@@ -1,27 +1,40 @@
-var builder = WebApplication.CreateBuilder(args);
+using Hrm.Infrastructure;
+using Hrm.Application;
+using Hrm.WebApp.ServiceExtentions;
 
-// Add services to the container.
-builder.Services.AddControllersWithViews();
-
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
+internal class Program
 {
-    app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
+    private static void Main(string[] args)
+    {
+        var builder = WebApplication
+            .CreateBuilder(args);
+
+        builder.Configuration.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+
+        builder.Services.SetupInfrastructure(builder.Configuration);
+        builder.Services.SetupApplication(builder.Configuration);
+        builder.Services.SetupWebApp(builder.Configuration);
+
+        var app = builder.Build();
+
+        if (!app.Environment.IsDevelopment())
+        {
+            app.UseExceptionHandler("/Home/Error");
+            app.UseHsts();
+        }
+
+        app.UseHttpsRedirection();
+        app.UseStaticFiles();
+
+        app.UseRouting();
+
+        app.UseAuthentication();
+        app.UseAuthorization();
+
+        app.MapControllerRoute(
+            name: "default",
+            pattern: "{controller=Dashboard}/{action=Index}/{id?}");
+
+        app.Run();
+    }
 }
-
-app.UseHttpsRedirection();
-app.UseStaticFiles();
-
-app.UseRouting();
-
-app.UseAuthorization();
-
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
-
-app.Run();
