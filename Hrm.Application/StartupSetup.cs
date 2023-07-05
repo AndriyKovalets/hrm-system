@@ -17,7 +17,6 @@ namespace Hrm.Application
             services.AddScoped<ISetupService, SetupService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAccountService, AccountService>();
-            services.AddSingleton<IOrganizationSettingsService, OrganizationSettingsService>();
         }
     }
 }
