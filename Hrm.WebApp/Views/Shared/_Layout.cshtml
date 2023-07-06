@@ -7,12 +7,13 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Hrm.WebApp.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Dashboard" asp-action="Index">Hrm.WebApp</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Dashboard" asp-action="Index" id="organizationName"></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -20,12 +21,25 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" >Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" >Privacy</a>
                         </li>
                     </ul>
+                    <span class="navbar-text">
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" ><i class="bi bi-person"></i></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area=""><i class="bi bi-bell"></i></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout"><i class="bi bi-box-arrow-in-right"></i></a>
+                            </li>
+                        </ul>
+                    </span>
                 </div>
             </div>
         </nav>
@@ -35,12 +49,25 @@
             @RenderBody()
         </main>
     </div>
+    <script>
+        var organizationName = '@TempData["OrganizationName"]';
+        var navBarOrganizationName = document.getElementById('organizationName');
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2023 - Hrm.WebApp - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
+        if (organizationName) {
+            localStorage.setItem('organizationName', organizationName);
+            navBarOrganizationName.textContent = organizationName;
+        }
+        else {
+            organizationName = localStorage.getItem('organizationName');
+            if (organizationName) {
+                navBarOrganizationName.textContent = organizationName;
+            }
+            else {
+                navBarOrganizationName.textContent = "HRM System";
+            }
+        }
+
+    </script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

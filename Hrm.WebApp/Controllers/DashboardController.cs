@@ -22,11 +22,6 @@ namespace Hrm.WebApp.Controllers
                 return RedirectToAction("Index", "Setup");
             }
 
-            if (User?.Identity is null || !User.Identity.IsAuthenticated)
-            {
-                return RedirectToAction("Login", "Account");
-            }
-
             return View();
         }
 
