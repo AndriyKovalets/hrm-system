@@ -1,0 +1,19 @@
+﻿@using Hrm.Domain.Roles;
+@model IEnumerable<Hrm.Domain.ViewModels.Departament.DepartmentShortInfoModel>
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Departments";
+}
+
+<div class="card-group">
+@foreach(var department in Model)
+{
+    @await Html.PartialAsync("_DepartmentCard", department)
+}
+</div>
+
+@if (ViewContext.HttpContext.User.IsInRole(SystemRoles.Admin) || ViewContext.HttpContext.User.IsInRole(SystemRoles.Manager))
+{
+    <a class="add-btn" asp-area="" asp-asp-controller="Department" asp-action="Edit"><i class="bi bi-plus-circle-fill"></i></a>
+}

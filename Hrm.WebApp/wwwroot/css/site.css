@@ -9,7 +9,7 @@ html {
 }
 
 html {
-  position: relative;
+  /*position: relative;*/
   min-height: 100%;
 }
 
@@ -17,6 +17,19 @@ body {
   margin-bottom: 60px;
 }
 
-i {
+.nav-btn-icon {
   font-size: 22px;
+}
+
+.add-btn {
+    color: #198754;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    font-size: 45px;
+}
+
+.edit-btn {
+    color: #198754;
+    font-size: 20px;
 }

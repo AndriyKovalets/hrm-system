@@ -1,11 +1,7 @@
-﻿using Hrm.Domain.Models.Account;
-using System.Security.Claims;
-
-namespace Hrm.Application.Abstractions.Services
+﻿namespace Hrm.Application.Abstractions.Services
 {
     public interface IAccountService
     {
-        Task<IEnumerable<Claim>> LoginAsync(LoginModel loginModel);
-        Task AddUserPasswordAsync(string userId, string password);
+        Task AddUserPasswordAsync(string email, string password);
     }
 }

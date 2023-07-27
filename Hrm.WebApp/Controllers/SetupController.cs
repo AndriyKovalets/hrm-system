@@ -1,6 +1,6 @@
 ﻿using Hrm.Application.Abstractions.Services;
 using Hrm.Domain.Exeptions;
-using Hrm.Domain.Models.Setup;
+using Hrm.Domain.ViewModels.Setup;
 using Hrm.WebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;

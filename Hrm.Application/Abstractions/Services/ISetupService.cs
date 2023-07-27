@@ -1,4 +1,4 @@
-﻿using Hrm.Domain.Models.Setup;
+﻿using Hrm.Domain.ViewModels.Setup;
 
 namespace Hrm.Application.Abstractions.Services
 {

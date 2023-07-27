@@ -1,0 +1,50 @@
+﻿@using Hrm.Domain.Roles;
+@model Hrm.Domain.ViewModels.Employee.EmployeeFullInfoModel;
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = Model.Name;
+}
+
+<div class="row">
+    <div class="col-xl-4">
+        <div class="card mb-4 mb-xl-0">
+            <div class="card-header">
+                <h5 class="card-title">Profile</h5>
+            </div>
+            <div class="card-body text-center">
+                <img src="@((!string.IsNullOrEmpty(Model.UserImgUrl))? Model.UserImgUrl: "/defaultFiles/noImage.png")" alt="avatar"
+                     class="rounded-circle img-fluid" style="width: 200px;">
+                <h5 class="card-title">@Model.Name</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Position: @(Model.Position ?? "-")</h6>
+                <p class="card-text">
+                    @((!string.IsNullOrEmpty(Model.DepartmentName)) ?
+                        Model.DepartmentName + " like " + Model.DepartmentRole : "")
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-8">
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between">
+                <h5 class="card-title">Account Details</h5>
+            </div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Phone: @(Model.PhoneNumber ?? "-")</li>
+                    <li class="list-group-item">Email: @(Model.Email ?? "-")</li>
+                    <li class="list-group-item">Description: @(Model.Description ?? "-")</li>
+                    <li class="list-group-item">Skills: @(Model.Skills ?? "-")</li>
+                    <li class="list-group-item">Start date: @Model.StartDate.ToShortDateString()</li>
+                    @if(Model.DateOfbirth != default)
+                    {
+                        <li class="list-group-item">Date of birth: @Model.DateOfbirth.ToShortDateString()</li>
+                    }    
+                </ul>
+            </div>
+        </div>
+        @if (ViewContext.HttpContext.User.IsInRole(SystemRoles.Admin) || ViewContext.HttpContext.User.IsInRole(SystemRoles.Manager))
+        {
+            <a class="btn btn-primary" asp-area="" asp-controller="Employee" asp-action="ChangeEmployeeDepartment" asp-route-id="@Model.Id">Change department</a>
+        }
+    </div>
+</div>

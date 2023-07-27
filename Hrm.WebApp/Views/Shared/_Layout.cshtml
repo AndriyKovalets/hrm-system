@@ -21,22 +21,25 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" >Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="Index">Employees</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" >Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Department" asp-action="Index">Departments</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="New" asp-action="Index">News</a>
                         </li>
                     </ul>
                     <span class="navbar-text">
                         <ul class="navbar-nav flex-grow-1">
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" ><i class="bi bi-person"></i></a>
+                                <a class="nav-link text-dark nav-btn-icon" asp-area=""><i class="bi bi-person"></i></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area=""><i class="bi bi-bell"></i></a>
+                                <a class="nav-link text-dark nav-btn-icon" asp-area=""><i class="bi bi-bell"></i></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout"><i class="bi bi-box-arrow-in-right"></i></a>
+                                <a class="nav-link text-dark nav-btn-icon" asp-area="" asp-controller="Account" asp-action="Logout"><i class="bi bi-box-arrow-in-right"></i></a>
                             </li>
                         </ul>
                     </span>
@@ -71,6 +74,20 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src='~/lib/tinymce/tinymce.min.js' referrerpolicy="origin"></script>
+
+    <script type="text/javascript">
+        function showLoader() {
+            document.getElementById("loader").style.display = 'block';
+        }
+    </script>
+
+    <script>
+        tinymce.init({
+            selector: '#content'
+        });
+    </script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

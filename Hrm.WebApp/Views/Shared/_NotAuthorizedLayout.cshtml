@@ -12,7 +12,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <h3>@ViewData["Title"]</h3>
+                <h3>@(ViewData["Title"] ?? TempData["OrganizationName"])</h3>
             </div>
         </nav>
     </header>

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using Hrm.Domain.Roles;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace Hrm.WebApp.ServiceExtentions
 {
@@ -7,7 +8,7 @@ namespace Hrm.WebApp.ServiceExtentions
         public static void SetupWebApp(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddControllers();
-            //services.AddAuthentication();
+            services.AddAuthorization();
         }
 
         private static void AddControllers(this IServiceCollection services)
@@ -24,6 +25,21 @@ namespace Hrm.WebApp.ServiceExtentions
                     options.SlidingExpiration = true;
                     options.AccessDeniedPath = "/Forbidden";
                 });
+        }
+
+        private static void AddAuthorization(this IServiceCollection services)
+        {
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(SystemRoles.Admin,
+                     policy => policy.RequireRole(SystemRoles.Admin));
+
+                options.AddPolicy(SystemRoles.Manager,
+                     policy => policy.RequireRole(SystemRoles.Manager));
+
+                options.AddPolicy(SystemRoles.Member,
+                     policy => policy.RequireRole(SystemRoles.Member));
+            });
         }
     }
 }

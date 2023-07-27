@@ -1,0 +1,48 @@
+﻿@using Hrm.Domain.Roles;
+@model Hrm.Domain.ViewModels.Departament.DepartmentFullInfoModel;
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = Model.Name;
+}
+<div class="card">
+    <div class="card-header d-flex justify-content-between">
+        <h5 class="card-title">@Model.Name</h5>
+        @if (ViewContext.HttpContext.User.IsInRole(SystemRoles.Admin) || ViewContext.HttpContext.User.IsInRole(SystemRoles.Manager))
+        {
+            <a class="edit-btn" asp-area="" asp-controller="Department" asp-action="Edit" asp-route-id="@Model.Id"><i class="bi bi-pencil-square"></i></a>
+        }
+    </div>
+    <div class="card-body">
+       
+        <p class="card-text">Parent Department: @(Model.ParentDepartmentName ?? "-")</p>
+        <p class="card-text">Descriotion: @Model.Description</p>
+        
+        @if (Model.ManagerName is not null)
+        {
+            <p class="card-text">
+                Manager: <a class="nav-link text-dark" asp-controller="Employee" asp-action="Details" asp-route-id="@Model.ManagerId">@Model.ManagerName</a>
+            </p>
+        }
+        else
+        {
+        <p class="card-text">
+            Manager: -
+        </p>
+        }
+        @if (Model.Users.Any())
+        {
+            <p class="card-text">Members:
+                @foreach (var user in Model.Users)
+                {
+                    <a class="nav-link text-dark" asp-controller="Employee" asp-action="Details" asp-route-id="@user.Key">@user.Value</a>
+                }
+            </p>
+        }
+        else
+        {
+            <p class="card-text">
+                Members: -
+            </p>
+        }
+    </div>
+</div>

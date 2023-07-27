@@ -15,6 +15,7 @@ namespace Hrm.WebApp.Controllers
             _configuration = configuration;
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
             if (string.IsNullOrEmpty(_configuration.GetConnectionString("DefaultConnection")))

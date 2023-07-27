@@ -1,5 +1,6 @@
-using Hrm.Infrastructure;
 using Hrm.Application;
+using Hrm.Application.Settings;
+using Hrm.Infrastructure;
 using Hrm.WebApp.ServiceExtentions;
 
 internal class Program
@@ -14,6 +15,8 @@ internal class Program
         builder.Services.SetupInfrastructure(builder.Configuration);
         builder.Services.SetupApplication(builder.Configuration);
         builder.Services.SetupWebApp(builder.Configuration);
+
+        builder.Services.Configure<FileSettings>(builder.Configuration.GetSection("FileSettings"));
 
         var app = builder.Build();
 

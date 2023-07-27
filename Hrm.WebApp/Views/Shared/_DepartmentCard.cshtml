@@ -1,0 +1,12 @@
+﻿@model Hrm.Domain.ViewModels.Departament.DepartmentShortInfoModel;
+
+<a class="nav-link text-dark" href="@Url.Action("Details", "Department", new { id = Model.Id })">
+<div class="card" style="width: 18rem;">
+    <div class="card-body">
+        <h5 class="card-title">@Model.Name</h5>
+        <p class="card-text">Parent Department: @((!string.IsNullOrEmpty(Model.ParentDepartment)) ? Model.ParentDepartment : "-")</p>
+        <p class="card-text">Manager: @((Model.Manager is not null) ? Model.Manager.GetFullName() : "-")</p>
+        <p class="card-text">Count of members: @Model.CountOfMemebers</p>
+    </div>
+</div>
+</a>

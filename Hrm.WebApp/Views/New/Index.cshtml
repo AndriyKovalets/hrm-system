@@ -1,0 +1,13 @@
+﻿@using Hrm.Domain.Roles;
+@*
+*@
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "News";
+}
+
+<p>News</p>
+@if (ViewContext.HttpContext.User.IsInRole(SystemRoles.Admin) || ViewContext.HttpContext.User.IsInRole(SystemRoles.Manager))
+{
+    <a class="add-btn" asp-area="" asp-asp-controller="New" asp-action="Edit"><i class="bi bi-plus-circle-fill"></i></a>
+}

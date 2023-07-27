@@ -1,10 +1,11 @@
 ﻿using Hrm.Application.Abstractions.Repositories;
 using Hrm.Application.Abstractions.Services;
 using Hrm.Application.OrganizationSettings;
-using Hrm.Application.Roles;
 using Hrm.Domain.Entities;
 using Hrm.Domain.Exeptions;
-using Hrm.Domain.Models.Setup;
+using Hrm.Domain.Roles;
+using Hrm.Domain.ViewModels.Employee;
+using Hrm.Domain.ViewModels.Setup;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 
@@ -14,12 +15,12 @@ namespace Hrm.Application.Services
     {
         private readonly IConfiguration _configuration;
         private readonly IRepository<OrganizationSetting> _organizationSettingsRepository;
-        private readonly IUserService _userService;
+        private readonly IEmployeeService _userService;
 
         public SetupService(
             IConfiguration configuration,
             IRepository<OrganizationSetting> repository,
-            IUserService userService)
+            IEmployeeService userService)
         {
             _configuration = configuration;
             _organizationSettingsRepository = repository;
@@ -49,14 +50,14 @@ namespace Hrm.Application.Services
 
             await _organizationSettingsRepository.SaveChangesAsync();
 
-            var adminUser = new User()
+            var adminUser = new EmployeeModel()
             {
                 FirstName = setupOrganization.FirstName,
                 LastName = setupOrganization.LastName,
                 Email = setupOrganization.Email
             };
 
-            await _userService.CreateUserAsync(adminUser, SystemRoles.Admin, setupOrganization.Password);
+            await _userService.CreateEmployeeAsync(adminUser, SystemRoles.Admin, null, setupOrganization.Password);
         }
 
         private async Task ChangeAppSettingConnectionStringAsync(string connectionString)

@@ -1,0 +1,13 @@
+﻿@model Hrm.Domain.ViewModels.Employee.EmployeeShortInfoModel;
+
+<a class="nav-link text-dark" href="@Url.Action("Details", "Employee", new { id = Model.Id })">
+    <div class="card" style="width: 18rem;">
+        <div class="card-body text-center">
+            <img src="@((!string.IsNullOrEmpty(Model.UserImgUrl))? Model.UserImgUrl: "/defaultFiles/noImage.png")" alt="avatar"
+            class="rounded-circle img-fluid" style="width: 100px;">
+            <h5 class="card-title">@Model.Name</h5>
+            <h6 class="card-subtitle mb-2 text-muted">Position: @(Model.Position ?? "-")</h6>
+            <p class="card-text">Department: @(Model.DepartmentName?? "-")</p>
+        </div>
+    </div>
+</a>

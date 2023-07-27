@@ -1,0 +1,48 @@
+﻿@model Hrm.Domain.ViewModels.Employee.EmployeeChangeDepartmentModel
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Change Department";
+}
+
+<div class="row">
+    <div class="col-xl-4">
+        <div class="card mb-4 mb-xl-0">
+            <div class="card-header">
+                <h5 class="card-title">Employee Info</h5>
+            </div>
+            <div class="card-body text-center">
+                <img src="@((!string.IsNullOrEmpty(Model.UserImage))? Model.UserImage: "/defaultFiles/noImage.png")" alt="avatar"
+                     class="rounded-circle img-fluid" style="width: 200px;">
+                <h5 class="card-title">@Model.Name</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Position: @(Model.Position ?? "-")</h6>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-8">
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between">
+                <h5 class="card-title">Change department</h5>
+            </div>
+            <div class="card-body">
+                @using (Html.BeginForm("ChangeEmployeeDepartment", "Employee", FormMethod.Post, new { onsubmit = "return showLoader()" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.DepartmentId, htmlAttributes: new { @class = "control-label" })
+                        <select class="form-select" asp-for="DepartmentId" asp-items="@Model.DepartmentSelectList"></select>
+                        @Html.ValidationMessageFor(model => model.DepartmentId, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.DepartmentRole, htmlAttributes: new { @class = "control-label" })
+                        <select class="form-select" asp-for="DepartmentRole" asp-items="@Model.DepartmentRoleSelectList"></select>
+                        @Html.ValidationMessageFor(model => model.DepartmentRole, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group text-center">
+                        <input type="submit" value="Change" class="btn btn-primary mt-4" />
+                        <a class="btn btn-warning mt-4" asp-controller="Employee" asp-action="Details" asp-route-id="@Model.Id">Cancel</a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
