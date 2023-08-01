@@ -1,0 +1,12 @@
+﻿@model IEnumerable<Hrm.Domain.ViewModels.New.NewShortInfoModel>
+
+<div class="card-group card">
+    <div class="card-header" style="width: 100%">
+        <h4 class="card-title">Last news</h4>
+
+    </div>
+    @foreach (var news in Model)
+    {
+        @await Html.PartialAsync("_NewsCard", news)
+    }
+</div>

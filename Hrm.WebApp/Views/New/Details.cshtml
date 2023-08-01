@@ -1,0 +1,22 @@
+﻿@using Hrm.Domain.Roles;
+@model Hrm.Domain.ViewModels.New.NewFullInfoModel;
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = Model.Header;
+}
+
+<div class="card">
+    <div class="card-header d-flex justify-content-between">
+        <div>
+            <h5 class="card-title">@Model.Header.ToUpper()</h5>
+            <h6 class="card-subtitle text-muted"><a class="nav-link text-dark" style="padding: 0" asp-controller="Employee" asp-action="Details" asp-route-id="@Model.CreatorId">created by @Model.CreatorName</a> @Model.CrerateAt.ToShortDateString()</h6>
+        </div>
+        @if (ViewContext.HttpContext.User.IsInRole(SystemRoles.Admin) || ViewContext.HttpContext.User.IsInRole(SystemRoles.Manager))
+        {
+            <a class="edit-btn" asp-area="" asp-controller="New" asp-action="Edit" asp-route-id="@Model.Id"><i class="bi bi-pencil-square"></i></a>
+        }
+    </div>
+    <div class="card-body">
+        @Html.Raw(Model.Content)
+    </div>
+</div>

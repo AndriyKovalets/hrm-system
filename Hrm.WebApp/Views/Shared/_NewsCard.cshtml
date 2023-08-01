@@ -1,0 +1,17 @@
+﻿@model Hrm.Domain.ViewModels.New.NewShortInfoModel
+@{
+    string shortContent = string.Join("", Model.Content.Split("\r\n").Take(2));
+}
+
+<a class="nav-link text-dark" href="@Url.Action("Details", "New", new { id = Model.Id })" style="width: 100%">
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">@Model.Header.ToUpper()</h5>
+            <h6 class="card-subtitle mb-2 text-muted">@Model.CrerateAt.ToShortDateString()</h6>
+        </div>
+        <div class="card-body">
+            @Html.Raw(shortContent)
+            <p class="cart-text"><i>More</i></p>
+        </div>
+    </div>
+</a>

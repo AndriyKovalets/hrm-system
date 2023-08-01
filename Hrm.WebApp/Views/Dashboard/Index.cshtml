@@ -1,8 +1,7 @@
-﻿@*
-*@
+﻿@model Hrm.Domain.ViewModels.Dashboard.DashboardModel;
 @{
     Layout = "_Layout";
     ViewData["Title"] = "Dashboard";
 }
 
-<p>Dashboard</p>
+@await Html.PartialAsync("_LastNews", Model.LastNews);

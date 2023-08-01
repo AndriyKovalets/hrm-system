@@ -3,7 +3,7 @@ using Hrm.Domain.Entities;
 using Hrm.Domain.Roles;
 using Hrm.Domain.ViewModels.Departament;
 using Hrm.Domain.ViewModels.Employee;
-using System.Xml.Linq;
+using Hrm.Domain.ViewModels.New;
 
 namespace Hrm.Application.Helpers
 {
@@ -33,6 +33,16 @@ namespace Hrm.Application.Helpers
                 .ForMember(dest => dest.Name, act => act.MapFrom(src => src.GetFullName()))
                 .ForMember(dest => dest.DepartmentName, act => act.MapFrom(src => src.Department.Name))
                 .ForMember(dest => dest.DepartmentId, act => act.MapFrom(src => src.Department.Id));
+
+            CreateMap<NewShortInfoModel, New>()
+                .ForMember(dest => dest.CrerateAt, act => act.MapFrom(src => DateTime.Now));
+
+            CreateMap<New, NewShortInfoModel>();
+
+            CreateMap<New, NewFullInfoModel>()
+                .ForMember(dest => dest.CreatorName, act => act.MapFrom(src => src.Creator.GetFullName()))
+                .ForMember(dest => dest.CreatorId, act => act.MapFrom(src => src.CreatorId));
         }
     }
 }
+

@@ -3,5 +3,6 @@
     public class OrganizationSettingsName
     {
         public const string OrganozationName = "OrganozationName";
+        public const string VaccinationSettings = "VaccinationSettings";
     }
 }
