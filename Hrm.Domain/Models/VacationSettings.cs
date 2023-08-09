@@ -2,10 +2,10 @@
 
 namespace Hrm.Domain.Models
 {
-    public class VaccinationSettings
+    public class VacationSettings
     {
         public int CounOfDays { get; set; }
-        public VaccinationPeriod Period { get; set; }
+        public VacationPeriod Period { get; set; }
         public bool NeedAccept { get; set; }
         public bool NegativeBalance { get; set; }
         public bool AllowMoveToNextYear { get; set; }

@@ -1,11 +1,15 @@
 ﻿using Hrm.Domain.Models;
+using Hrm.Domain.Roles;
+using Hrm.Domain.ViewModels.Settings;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Hrm.Application.Abstractions.Services
 {
     public interface ISettingsService
     {
         Task<string?> GetOrganizationName();
-        Task<VaccinationSettings?> GetVaccinationSettings();
-        Task EditVaccinationSettings(VaccinationSettings settings);
+        Task<VacationSettingsModel?> GetVacationSettingsAsync();
+        Task EditVaccinationSettings(VacationSettings settings);
+        IEnumerable<SelectListItem> GetPeriodList(DepartmentRolesEnum? selectDepartmenRole = null);
     }
 }

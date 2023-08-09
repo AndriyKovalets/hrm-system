@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Hrm.Domain.Roles;
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -29,6 +30,13 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="New" asp-action="Index">News</a>
                         </li>
+                        @if (ViewContext.HttpContext.User.IsInRole(SystemRoles.Admin) || ViewContext.HttpContext.User.IsInRole(SystemRoles.Manager))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Settings" asp-action="Index">Settings</a>
+                            </li>
+                        }
+                        
                     </ul>
                     <span class="navbar-text">
                         <ul class="navbar-nav flex-grow-1">

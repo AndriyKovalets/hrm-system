@@ -1,5 +1,61 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model Hrm.Domain.ViewModels.Settings.SettingsModel
+
 @{
+    Layout = "_Layout";
+    ViewData["Title"] = "Settings";
 }
+
+<div class="row justify-content-center">
+    <div class="col-6">
+
+        <div class="d-flex justify-content-center">
+            <div class="spinner-border text-primary" role="status" id="loader" style="display:none;">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+
+        @using (Html.BeginForm("Edit", "Settings", FormMethod.Post, new { onsubmit = "return showLoader()" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-horizontal">
+                <h4>Vacation Setting</h4>
+                @Html.ValidationSummary(true)
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.VaccinationSettings!.CounOfDays, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.VaccinationSettings!.CounOfDays, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.VaccinationSettings!.CounOfDays, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.VaccinationSettings!.Period, htmlAttributes: new { @class = "control-label" })
+                    <select class="form-select" asp-for="VaccinationSettings!.Period" asp-items="@Model.VaccinationSettings!.PeriodSelectList"></select>
+                    @Html.ValidationMessageFor(model => model.VaccinationSettings!.Period, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    @Html.CheckBoxFor(model => model.VaccinationSettings!.NeedAccept, new { htmlAttributes = new { @class = "form-check-input", @type="checkbox"} })
+                    @Html.LabelFor(model => model.VaccinationSettings!.NeedAccept, htmlAttributes: new { @class = "form-check-label" })
+                    @Html.ValidationMessageFor(model => model.VaccinationSettings!.NeedAccept, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    @Html.CheckBoxFor(model => model.VaccinationSettings!.NegativeBalance, new { htmlAttributes = new { @class = "form-check-input", @type="checkbox"} })
+                    @Html.LabelFor(model => model.VaccinationSettings!.NegativeBalance, htmlAttributes: new { @class = "form-check-label" })
+                    @Html.ValidationMessageFor(model => model.VaccinationSettings!.NegativeBalance, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    @Html.CheckBoxFor(model => model.VaccinationSettings!.AllowMoveToNextYear, new { htmlAttributes = new { @class = "form-check-input", @type="checkbox"} })
+                    @Html.LabelFor(model => model.VaccinationSettings!.AllowMoveToNextYear, htmlAttributes: new { @class = "form-check-label" })
+                    @Html.ValidationMessageFor(model => model.VaccinationSettings!.AllowMoveToNextYear, "", new { @class = "text-danger" })
+                </div>
+
+
+                <div class="form-group text-center">
+                    <input type="submit" value="Change" class="btn btn-primary mt-4" />
+                </div>
+            </div>
+        }
+    </div>
+</div>

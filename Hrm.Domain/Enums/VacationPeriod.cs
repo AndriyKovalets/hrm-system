@@ -1,6 +1,6 @@
 ﻿namespace Hrm.Domain.Enums
 {
-    public enum VaccinationPeriod
+    public enum VacationPeriod
     {
         week = 0,
         month = 1,
