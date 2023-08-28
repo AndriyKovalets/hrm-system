@@ -8,6 +8,8 @@ namespace Hrm.Domain.Models
         public VacationPeriod Period { get; set; }
         public bool NeedAccept { get; set; }
         public bool NegativeBalance { get; set; }
+        public int MaxNegativeBalance { get; set; }
         public bool AllowMoveToNextYear { get; set; }
+        public int MaxBalance { get; set; }
     }
 }

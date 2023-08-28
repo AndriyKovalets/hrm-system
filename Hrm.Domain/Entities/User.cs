@@ -17,7 +17,10 @@ namespace Hrm.Domain.Entities
         public int? DepartmentId { get; set; }
         public Department? Department { get; set; }
         public DepartmentRolesEnum DepartmentRole { get; set; }
-        public IEnumerable<New> News { get; set; }
+        public double VacationBalance { get; set; }
+        public DateTime LastDateUpdateVacationBalance { get; set; }
+        public IEnumerable<New>? News { get; set; }
+        public IEnumerable<VacationHistory>? VacationHistories { get; set; }
 
         public string GetFullName()
         {

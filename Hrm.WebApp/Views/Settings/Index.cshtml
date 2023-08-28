@@ -21,6 +21,12 @@
                 <h4>Vacation Setting</h4>
                 @Html.ValidationSummary(true)
 
+                 <div class="form-group">
+                    @Html.LabelFor(model => model.VaccinationSettings!.MaxBalance, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.VaccinationSettings!.MaxBalance, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.VaccinationSettings!.MaxBalance, "", new { @class = "text-danger" })
+                </div>
+
                 <div class="form-group">
                     @Html.LabelFor(model => model.VaccinationSettings!.CounOfDays, htmlAttributes: new { @class = "control-label" })
                     @Html.EditorFor(model => model.VaccinationSettings!.CounOfDays, new { htmlAttributes = new { @class = "form-control" } })
@@ -31,6 +37,12 @@
                     @Html.LabelFor(model => model.VaccinationSettings!.Period, htmlAttributes: new { @class = "control-label" })
                     <select class="form-select" asp-for="VaccinationSettings!.Period" asp-items="@Model.VaccinationSettings!.PeriodSelectList"></select>
                     @Html.ValidationMessageFor(model => model.VaccinationSettings!.Period, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.VaccinationSettings!.MaxNegativeBalance, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.VaccinationSettings!.MaxNegativeBalance, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.VaccinationSettings!.MaxNegativeBalance, "", new { @class = "text-danger" })
                 </div>
 
                 <div class="form-group">

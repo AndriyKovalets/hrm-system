@@ -1,0 +1,106 @@
+﻿@using Hrm.Domain.Roles;
+@model Hrm.Domain.ViewModels.Account.Profile
+@{
+    var fullName = $"{Model.FirstName} {Model.LastName}";
+    Layout = "_Layout";
+    ViewData["Title"] = fullName;
+}
+
+<div class="row">
+    <div class="col-xl-4">
+        <div class="card mb-4 mb-xl-0">
+            <div class="card-header">
+                <h5 class="card-title">Profile</h5>
+            </div>
+            <div class="card-body text-center">
+                <img src="@((!string.IsNullOrEmpty(Model.UserImgUrl))? Model.UserImgUrl: "/defaultFiles/noImage.png")" alt="avatar"
+                     class="rounded-circle img-fluid" style="width: 200px;">
+                <h5 class="card-title">@fullName</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Position: @(Model.Position ?? "-")</h6>
+                <p class="card-text">
+                    Start Date: @(Model.StartDate.ToShortDateString())
+                </p>
+                <p class="card-text">
+                    @((!string.IsNullOrEmpty(Model.DepartmentName)) ?
+                        Model.DepartmentName + " like " + Model.DepartmentRole : "")
+                </p>
+                <a class="btn btn-primary mt-4" asp-controller="Vacation" asp-action="Index">Vacation</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-8">
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between">
+                <h5 class="card-title">Account Details</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-flex justify-content-center">
+                    <div class="spinner-border text-primary" role="status" id="loader" style="display:none;">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+
+                @using (Html.BeginForm("Profile", "Account", FormMethod.Post, new { onsubmit = "return showLoader()", @* enctype = "multipart/form-data" *@ }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-horizontal">
+                        <h4>Create Employee</h4>
+                        @Html.ValidationSummary(true)
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                        </div>
+
+@*                         <div class="form-group">
+                            @Html.LabelFor(model => model.UserImage, htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.UserImage, new { htmlAttributes = new { @class = "form-control", @type= "File", @accept="image/*" } })
+                            @Html.ValidationMessageFor(model => model.UserImage, "", new { @class = "text-danger" })
+                        </div> *@
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label" })
+                            @Html.TextAreaFor(model => model.Description, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Skills, htmlAttributes: new { @class = "control-label" })
+                            @Html.TextAreaFor(model => model.Skills, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Skills, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.DateOfbirth, htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.DateOfbirth, new { htmlAttributes = new { @class = "form-control", @type= "Date" } })
+                            @Html.ValidationMessageFor(model => model.DateOfbirth, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group text-center">
+                            <input type="submit" value="Edit" class="btn btn-primary mt-4" />
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

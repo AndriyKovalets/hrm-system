@@ -1,0 +1,55 @@
+﻿@model Hrm.Domain.ViewModels.Vacation.VacationFullInfoModel;
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Vacation";
+}
+
+<div class="row">
+    <div class="col-xl-4">
+        <div class="card mb-4 mb-xl-0">
+            <div class="card-header">
+                <h5 class="card-title">Vacation</h5>
+            </div>
+            <div class="card-body text-center">
+                <h5 class="card-title">Vacation balance: @Model.VacationBalance</h5>
+                <a class="btn btn-primary mt-4" asp-controller="Vacation" asp-action="VacationRequest">Request</a>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-8">
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between">
+                <h5 class="card-title">Vacantion History</h5>
+            </div>
+            <div class="card-body">
+                @if (Model.VacationHistories is not null)
+                {
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Balance</th>
+                                <th scope="col">Type</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Accepte</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var history in Model?.VacationHistories)
+                            {
+                                <tr>
+                                    <td>@history.Balance</td>
+                                    <td>@history.Type</td>
+                                    <td>@history.Description</td>
+                                    <td>@history.IsAccepted</td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                }
+            </div>
+        </div>
+    </div>
+</div>

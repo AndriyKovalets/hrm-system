@@ -4,6 +4,7 @@ using Hrm.Domain.Roles;
 using Hrm.Domain.ViewModels.Departament;
 using Hrm.Domain.ViewModels.Employee;
 using Hrm.Domain.ViewModels.New;
+using Hrm.Domain.ViewModels.Vacation;
 
 namespace Hrm.Application.Helpers
 {
@@ -34,6 +35,14 @@ namespace Hrm.Application.Helpers
                 .ForMember(dest => dest.DepartmentName, act => act.MapFrom(src => src.Department.Name))
                 .ForMember(dest => dest.DepartmentId, act => act.MapFrom(src => src.Department.Id));
 
+            CreateMap<User, Domain.ViewModels.Account.Profile>();
+
+            CreateMap<User, VacationFullInfoModel>()
+                .ForMember(dest => dest.UserId, act => act.MapFrom(src => src.Id));
+
+            CreateMap<VacationHistory, VacationHistoryModel>();
+            CreateMap<VacationHistoryModel, VacationHistory>();
+
             CreateMap<NewShortInfoModel, New>()
                 .ForMember(dest => dest.CrerateAt, act => act.MapFrom(src => DateTime.Now));
 
@@ -42,6 +51,8 @@ namespace Hrm.Application.Helpers
             CreateMap<New, NewFullInfoModel>()
                 .ForMember(dest => dest.CreatorName, act => act.MapFrom(src => src.Creator.GetFullName()))
                 .ForMember(dest => dest.CreatorId, act => act.MapFrom(src => src.CreatorId));
+
+            CreateMap<VacationRequesModel, VacationHistory>();
         }
     }
 }

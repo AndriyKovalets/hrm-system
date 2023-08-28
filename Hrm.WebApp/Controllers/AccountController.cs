@@ -1,8 +1,10 @@
 ﻿using Hrm.Application.Abstractions.Services;
 using Hrm.Domain.Entities;
 using Hrm.Domain.ViewModels.Account;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Hrm.WebApp.Controllers
 {
@@ -10,13 +12,16 @@ namespace Hrm.WebApp.Controllers
     {
         private readonly SignInManager<User> _signInManager;
         private readonly ISettingsService _settingsService;
+        private readonly IAccountService _accountService;
 
         public AccountController(
             SignInManager<User> signInManager,
-            ISettingsService settingsService)
+            ISettingsService settingsService,
+            IAccountService accountService)
         {
             _signInManager = signInManager;
             _settingsService = settingsService;
+            _accountService = accountService;
         }
 
         [HttpGet]
@@ -48,6 +53,15 @@ namespace Hrm.WebApp.Controllers
 
             ModelState.AddModelError("Error", "Invalid email or password");
             return View();
+        }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> Profile()
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var profile = await _accountService.GetProfileAsync(userId);
+            return View(profile);
         }
 
         public async Task<IActionResult> Logout()
