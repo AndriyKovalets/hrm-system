@@ -1,0 +1,18 @@
+﻿@using Hrm.Domain.Roles;
+@model IEnumerable<Hrm.Domain.ViewModels.Document.DocumentFullInfoModel>;
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Documents";
+}
+
+<div class="card-group">
+    @foreach (var document in Model)
+    {
+        @await Html.PartialAsync("_DocumentCard", document)
+    }
+</div>
+
+@if (ViewContext.HttpContext.User.IsInRole(SystemRoles.Admin) || ViewContext.HttpContext.User.IsInRole(SystemRoles.Manager))
+{
+    <a class="add-btn" asp-area="" asp-asp-controller="Document" asp-action="Edit"><i class="bi bi-plus-circle-fill"></i></a>
+}

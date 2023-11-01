@@ -1,8 +1,8 @@
 ﻿@using Hrm.Domain.Roles;
-@model Hrm.Domain.ViewModels.New.NewShortInfoModel;
+@model Hrm.Domain.ViewModels.Document.DocumentShortInfoModel;
 @{
     Layout = "_Layout";
-    ViewData["Title"] = $"{((Model is not null) ? "Edit" : "Create")} New";
+    ViewData["Title"] = $"{((Model is not null) ? "Edit" : "Create")} Document";
 }
 
 <div class="row justify-content-center">
@@ -14,11 +14,11 @@
             </div>
         </div>
 
-        @using (Html.BeginForm("Edit", "New", FormMethod.Post, new { onsubmit = "return showLoader()"}))
+        @using (Html.BeginForm("Edit", "Document", FormMethod.Post, new { onsubmit = "return showLoader()"}))
         {
             @Html.AntiForgeryToken()
             <div class="form-horizontal">
-                <h4>@((Model is not null) ? "Edit" : "Create") New</h4>
+                <h4>@((Model is not null) ? "Edit" : "Create") Document</h4>
                 @Html.ValidationSummary(true)
 
                 <div class="form-group">
@@ -37,11 +37,11 @@
                     <input type="submit" value="@((Model is not null)? "Edit": "Create")" class="btn btn-primary mt-4" />
                     @if (Model is not null)
                     {
-                        <a class="btn btn-warning mt-4" asp-controller="New" asp-action="Details" asp-route-id="@Model?.Id">Cancel</a>
+                        <a class="btn btn-warning mt-4" asp-controller="Document" asp-action="Details" asp-route-id="@Model?.Id">Cancel</a>
                     }
                     else
                     {
-                        <a class="btn btn-warning mt-4" asp-controller="New" asp-action="Index">Cancel</a>
+                        <a class="btn btn-warning mt-4" asp-controller="Document" asp-action="Index">Cancel</a>
                     }
                 </div>
             </div>

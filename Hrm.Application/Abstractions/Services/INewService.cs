@@ -8,5 +8,6 @@ namespace Hrm.Application.Abstractions.Services
         Task<IEnumerable<NewShortInfoModel>> GetNewsListAsync();
         Task<NewFullInfoModel?> GetNewsAsync(int id);
         Task<IEnumerable<NewShortInfoModel>> GetNewsListAsync(int take);
+        Task EditNewAsync(NewShortInfoModel model, string? creatorId);
     }
 }

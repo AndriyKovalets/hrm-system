@@ -1,6 +1,6 @@
-﻿namespace Hrm.Domain.ViewModels.New
+﻿namespace Hrm.Domain.ViewModels.Document
 {
-    public class NewFullInfoModel: NewShortInfoModel
+    public class DocumentFullInfoModel: DocumentShortInfoModel
     {
         public string? CreatorId { get; set; }
         public string? CreatorName { get; set; }

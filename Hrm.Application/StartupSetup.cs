@@ -25,6 +25,7 @@ namespace Hrm.Application
             services.AddScoped<IStorageService, LocaleStorageService>();
             services.AddScoped<INewService, NewService>();
             services.AddScoped<IVacationService, VacationService>();
+            services.AddScoped<IDocumentService, DocumentService>();
         }
 
         public static void AddAutoMapper(this IServiceCollection services)

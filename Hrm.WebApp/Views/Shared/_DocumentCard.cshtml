@@ -1,0 +1,11 @@
+﻿@model Hrm.Domain.ViewModels.Document.DocumentFullInfoModel
+
+<a class="nav-link text-dark" href="@Url.Action("Details", "Document", new { id = Model.Id })">
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">@Model.Header</h5>
+            <p class="card-text">Create at: @Model.CrerateAt.ToShortDateString()</p>
+            <p class="card-text">Created by: @Model.CreatorName</p>
+        </div>
+    </div>
+</a>

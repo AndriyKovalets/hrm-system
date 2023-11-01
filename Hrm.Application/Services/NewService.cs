@@ -29,6 +29,18 @@ namespace Hrm.Application.Services
             await _newRepository.SaveChangesAsync();
         }
 
+        public async Task EditNewAsync(NewShortInfoModel model, string? creatorId)
+        {
+            var news = await _newRepository.GetByKeyAsync(model.Id);
+            news.CreatorId = creatorId;
+            news.Header = model.Header;
+            news.CrerateAt = DateTime.Now;
+            news.Content = model.Content;
+
+            await _newRepository.UpdateAsync(news);
+            await _newRepository.SaveChangesAsync();
+        }
+
         public async Task<IEnumerable<NewShortInfoModel>> GetNewsListAsync()
         {
             return await _newRepository

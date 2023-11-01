@@ -1,5 +1,6 @@
 ﻿using Hrm.Application.Abstractions.Services;
 using Hrm.Domain.Roles;
+using Hrm.Domain.ViewModels.Document;
 using Hrm.Domain.ViewModels.New;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -7,39 +8,39 @@ using System.Security.Claims;
 
 namespace Hrm.WebApp.Controllers
 {
-    public class NewController : Controller
+    public class DocumentController : Controller
     {
-        private readonly INewService _newService;
+        private readonly IDocumentService _documentService;
 
-        public NewController(INewService newService)
+        public DocumentController(IDocumentService documentService)
         {
-            _newService = newService;
+            _documentService = documentService;
         }
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var news = await _newService.GetNewsListAsync();
+            var documents = await _documentService.GetDodumentListAsync();
 
-            return View(news);
+            return View(documents);
         }
 
         [HttpGet]
         public async Task<IActionResult> Details(int? id)
         {
-            var news = await _newService.GetNewsAsync(id.Value);
+            var document = await _documentService.GetDodumentAsync(id.Value);
 
-            return View(news);
+            return View(document);
         }
 
         [HttpGet]
         [Authorize(Roles = $"{SystemRoles.Admin}, {SystemRoles.Manager}")]
         public async Task<IActionResult> Edit(int? id)
         {
-            if(id.HasValue)
+            if (id.HasValue)
             {
-                var news = await _newService.GetNewsAsync(id.Value);
-                return View(news);
+                var document = await _documentService.GetDodumentAsync(id.Value);
+                return View(document);
             }
 
             return View();
@@ -47,23 +48,23 @@ namespace Hrm.WebApp.Controllers
 
         [HttpPost]
         [Authorize(Roles = $"{SystemRoles.Admin}, {SystemRoles.Manager}")]
-        public async Task<IActionResult> Edit(NewShortInfoModel model)
+        public async Task<IActionResult> Edit(DocumentShortInfoModel model)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View(model);
             }
 
             string? userId = User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-            if(model.Id == 0)
+            if (model.Id == 0)
             {
-                await _newService.AddNewAsync(model, userId);
+                await _documentService.AddDodumentAsync(model, userId);
                 return RedirectToAction("Index");
             }
             else
             {
-                await _newService.EditNewAsync(model, userId);
+                await _documentService.EditDocumentAsync(model, userId);
                 return RedirectToAction("Details", new { id = model.Id });
             }
 
