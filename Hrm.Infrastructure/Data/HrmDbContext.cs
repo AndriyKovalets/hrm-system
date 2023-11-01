@@ -17,6 +17,9 @@ namespace Hrm.Infrastructure.Data
         public DbSet<Department> Departments { get; set; }
         public DbSet<New> News { get; set; }
         public DbSet<VacationHistory> VacationHistories { get; set; }
+        public DbSet<Document> Documents { get; set; }
+        public DbSet<VacationPlan> VacantionPlans { get; set; }
+        public DbSet<VacationRate> VacationRates { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -26,6 +29,9 @@ namespace Hrm.Infrastructure.Data
             builder.ApplyConfiguration(new DepartmentConfiguration());
             builder.ApplyConfiguration(new OrganizationSettingConfiguration());
             builder.ApplyConfiguration(new VacationHistoryConfiguration());
+            builder.ApplyConfiguration(new VacationRateConfiguration());
+            builder.ApplyConfiguration(new VacationPlanConfiguration());
+            builder.ApplyConfiguration(new DocumentConfiguration());
         }
     }
 }

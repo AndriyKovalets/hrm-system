@@ -21,6 +21,9 @@ namespace Hrm.Domain.Entities
         public DateTime LastDateUpdateVacationBalance { get; set; }
         public IEnumerable<New>? News { get; set; }
         public IEnumerable<VacationHistory>? VacationHistories { get; set; }
+        public IEnumerable<Document>? Documents { get; set; }
+        public IEnumerable<VacationPlan>? VacationPlans { get; set; }
+        public IEnumerable<VacationRate>? VacationRates { get; set; }
 
         public string GetFullName()
         {
