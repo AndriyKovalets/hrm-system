@@ -6,6 +6,7 @@ namespace Hrm.Domain.ViewModels.Employee
     {
         public string? Id { get; set; }
         public string? Name { get; set; }
+        public string? userRole { get; set; }
         public string? UserImgUrl { get; set; }
         public string? Email { get; set; }
         public string? Position { get; set; }

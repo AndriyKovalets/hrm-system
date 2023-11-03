@@ -110,5 +110,27 @@ namespace Hrm.Application.Services
             await _vacationHistoryRepository.UpdateAsync(vacation);
             await _userRepository.SaveChangesAsync();
         }
+
+        public async Task<IEnumerable<VacantionAceptModel>> GetCurrentVacationAsync()
+        {
+            var dateStart = DateTime.Now.AddDays(-7).Date;
+            var dateEnd = DateTime.Now.AddDays(28).Date;
+
+            var currentVacationList = await _vacationHistoryRepository
+                .Query()
+                .Include(x => x.User)
+                .Where(x => x.Type == VacationHistoryType.Request && x.IsAccepted != false && 
+                (x.DateFrom.Date >= dateStart && x.DateFrom.Date <= dateEnd))
+                .OrderBy(x => x.DateFrom)
+                .Select(x => new VacantionAceptModel()
+                {
+                    UserId = x.UserId,
+                    UserName = x.User.GetFullNameWithPosition(),
+                    VacationRequest = _mapper.Map<VacationHistoryModel>(x)
+                })
+                .ToListAsync();
+            
+            return currentVacationList;
+        }
     }
 }

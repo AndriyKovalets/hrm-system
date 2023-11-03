@@ -60,5 +60,13 @@ namespace Hrm.WebApp.Controllers
             var vacationFulInfo = await _vacationService.GetVacationFullInfoAsync(userId);
             return View(vacationFulInfo);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Calendar()
+        {
+            var curentVacationList = await _vacationService.GetCurrentVacationAsync();
+
+            return View(curentVacationList);
+        }
     }
 }

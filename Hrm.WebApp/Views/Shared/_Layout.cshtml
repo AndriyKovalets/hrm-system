@@ -33,6 +33,9 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Document" asp-action="Index">Documents</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Vacation" asp-action="Calendar">Vacation calendar</a>
+                        </li>
                         @if (ViewContext.HttpContext.User.IsInRole(SystemRoles.Admin) || ViewContext.HttpContext.User.IsInRole(SystemRoles.Manager))
                         {
                             <li class="nav-item">
@@ -51,9 +54,6 @@
                         <ul class="navbar-nav flex-grow-1">
                             <li class="nav-item">
                                 <a class="nav-link text-dark nav-btn-icon" asp-area="" asp-controller="Account" asp-action="Profile"><i class="bi bi-person"></i></a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark nav-btn-icon" asp-area=""><i class="bi bi-bell"></i></a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark nav-btn-icon" asp-area="" asp-controller="Account" asp-action="Logout"><i class="bi bi-box-arrow-in-right"></i></a>

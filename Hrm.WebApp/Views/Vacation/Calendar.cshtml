@@ -1,0 +1,48 @@
+﻿@model IEnumerable<Hrm.Domain.ViewModels.Vacation.VacantionAceptModel>;
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Vacation calendar";
+}
+<div class="card-header d-flex justify-content-between">
+    <h5 class="card-title">Vacantion Calendar</h5>
+</div>
+<div class="card-body">
+    @if (Model is not null)
+    {
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Employee</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Days</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Accept</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var vacation in Model)
+                {
+                    <tr>
+                        <td>@vacation.UserName</td>
+                        <td>@vacation.VacationRequest.DateFrom.ToShortDateString() - @vacation.VacationRequest.DateTo.ToShortDateString()</td>
+                        <td>@vacation.VacationRequest.Balance</td>
+                        <td>@vacation.VacationRequest.Description</td>
+                        @{
+                            if (vacation.VacationRequest.IsAccepted == true)
+                            {
+                                <td>Accepded</td>
+                            }
+                            if (vacation.VacationRequest.IsAccepted == null)
+                            {
+                                <td>Pending</td>
+                            }
+                        }
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    }
+</div>
+

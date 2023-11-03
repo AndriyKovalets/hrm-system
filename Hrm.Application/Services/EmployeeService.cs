@@ -155,12 +155,71 @@ namespace Hrm.Application.Services
 
         public async Task<EmployeeFullInfoModel?> GetEmployeeFullInfoAsync(string id)
         {
-            return await _userRepository
+            var user = await _userRepository
                 .Query()
                 .Include(x => x.Department)
-                .Where(x => x.Id == id)
-                .Select(x => _mapper.Map<EmployeeFullInfoModel>(x))
+                .Where(x => x.Id == id)               
                 .FirstOrDefaultAsync();
+
+            var roles = await _userManager.GetRolesAsync(user);
+
+            var userToReturn = _mapper.Map<EmployeeFullInfoModel>(user);
+
+            userToReturn.userRole = roles.FirstOrDefault();
+
+            return userToReturn;
+        }
+
+        public async Task<string?> GetCurrentUserRoleAsync(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            var roles = await _userManager.GetRolesAsync(user);
+
+            return roles.FirstOrDefault();
+        }
+
+        public async Task ChangeUserRoleAsync(string userId, string userRole)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            var roles = await _userManager.GetRolesAsync(user);
+
+            var role = await _roleManager.FindByNameAsync(userRole);
+
+            if (role == null)
+            {
+                await _roleManager.CreateAsync(new IdentityRole(userRole));
+            }
+
+            await _userManager.RemoveFromRoleAsync(user, roles.First());
+            await _userManager.AddToRoleAsync(user, userRole);
+        }
+
+        public IEnumerable<SelectListItem> GetRoleSelectListAsync(string currentUserRole)
+        {
+            var roleList = new List<SelectListItem>
+            {
+                new SelectListItem()
+                {
+                    Text = SystemRoles.Member,
+                    Value = SystemRoles.Member,
+                    Disabled = false,
+                    Selected = false
+                },
+
+                new SelectListItem()
+                {
+                    Text = SystemRoles.Manager,
+                    Value = SystemRoles.Manager,
+                    Disabled = false,
+                    Selected = false
+                }
+            };
+
+            var role = roleList.First(x => x.Value == currentUserRole);
+
+            role.Selected = true;
+
+            return roleList;
         }
     }
 }

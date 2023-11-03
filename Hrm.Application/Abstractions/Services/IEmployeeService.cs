@@ -13,5 +13,8 @@ namespace Hrm.Application.Abstractions.Services
         Task<IEnumerable<EmployeeShortInfoModel>> GetEmployeeShortInfoListAsync();
         Task<EmployeeFullInfoModel?> GetEmployeeFullInfoAsync(string id);
         Task<IEnumerable<SelectListItem>> GetEmployeesSelectListAsync(IEnumerable<string>? selectedUsers = null);
+        Task ChangeUserRoleAsync(string userId, string userRole);
+        Task<string?> GetCurrentUserRoleAsync(string userId);
+        IEnumerable<SelectListItem> GetRoleSelectListAsync(string currentUserRole);
     }
 }

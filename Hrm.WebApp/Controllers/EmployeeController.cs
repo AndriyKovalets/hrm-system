@@ -122,5 +122,30 @@ namespace Hrm.WebApp.Controllers
 
             return RedirectToAction("Details", new { model.Id});
         }
+
+        [HttpGet]
+        [Authorize(Roles = $"{SystemRoles.Admin}, {SystemRoles.Manager}")]
+        public async Task<IActionResult> ChangeRole(string? userId)
+        {
+            var role = await _employeeService.GetCurrentUserRoleAsync(userId);
+            var user = await _employeeService.GetEmployeeFullInfoAsync(userId);
+            var model = new ChangeUserRoleModel()
+            {
+                UserId = userId,
+                UserName = $"{user.Name} {user.Position}", 
+                Roles = _employeeService.GetRoleSelectListAsync(role)
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = $"{SystemRoles.Admin}, {SystemRoles.Manager}")]
+        public async Task<IActionResult> ChangeRole([FromQuery]string userId, [FromForm] ChangeUserRoleModel model)
+        {
+            await _employeeService.ChangeUserRoleAsync(userId, model.UserRole);
+
+            return RedirectToAction("Details", new { id = userId });
+        }
     }
 }

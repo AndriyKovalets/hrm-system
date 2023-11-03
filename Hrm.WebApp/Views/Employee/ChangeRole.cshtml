@@ -1,0 +1,26 @@
+﻿@model Hrm.Domain.ViewModels.Employee.ChangeUserRoleModel
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Change Department";
+}
+
+<div class="card mb-4">
+    <div class="card-header d-flex justify-content-between">
+        <h5 class="card-title">Change user role (@Model.UserName)</h5>
+    </div>
+    <div class="card-body">
+        @using (Html.BeginForm("ChangeRole", "Employee", routeValues: new { userId = Model.UserId }, FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-group">
+                @Html.LabelFor(model => model.UserRole, htmlAttributes: new { @class = "control-label" })
+                <select class="form-select" asp-for="UserRole" asp-items="@Model.Roles"></select>
+                @Html.ValidationMessageFor(model => model.UserRole, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group text-center">
+                <input type="submit" value="Change" class="btn btn-primary mt-4" />
+                <a class="btn btn-warning mt-4" asp-controller="Employee" asp-action="Details" asp-route-id="@Model.UserId">Cancel</a>
+            </div>
+        }
+    </div>
+</div>

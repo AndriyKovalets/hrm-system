@@ -11,6 +11,7 @@ namespace Hrm.Application.Abstractions.Services
     {
         Task AcceptVacationAsync(int vacationId, bool isAccept);
         Task AddVacationRequest(VacationRequesModel vacationRequest);
+        Task<IEnumerable<VacantionAceptModel>> GetCurrentVacationAsync();
         Task<IEnumerable<VacantionAceptModel>> GetNotAcceptVacationAsync();
         Task<VacationFullInfoModel> GetVacationFullInfoAsync(string userId);
     }
