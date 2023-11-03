@@ -1,0 +1,12 @@
+﻿@model Hrm.Domain.ViewModels.Vacation.VacationFullInfoModel;
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Vacation History";
+}
+<div class="card-header d-flex justify-content-between">
+    <h5 class="card-title">@Model.UserName - Vacantion History</h5>
+</div>
+<div class="card-body">
+    @(await Html.PartialAsync("_VacantionHistoryCard", Model.VacationHistories))
+</div>
+

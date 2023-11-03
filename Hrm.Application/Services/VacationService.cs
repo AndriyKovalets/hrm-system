@@ -6,6 +6,7 @@ using Hrm.Domain.Enums;
 using Hrm.Domain.Exeptions;
 using Hrm.Domain.ViewModels.Vacation;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace Hrm.Application.Services
 {
@@ -35,6 +36,9 @@ namespace Hrm.Application.Services
                                 .Include(x => x.VacationHistories)
                                 .FirstOrDefaultAsync(x => x.Id == userId);
 
+            if(vacationInfo.VacationHistories is not null)
+                vacationInfo.VacationHistories = vacationInfo?.VacationHistories.OrderByDescending(x => x.Id);
+
             return _mapper.Map<VacationFullInfoModel>(vacationInfo);
         }
 
@@ -51,7 +55,7 @@ namespace Hrm.Application.Services
 
             var vacationHistory = _mapper.Map<VacationHistory>(vacationRequest);
 
-            vacationHistory.Balance = (vacationHistory.DateTo - vacationHistory.DateFrom).Days;
+            vacationHistory.Balance = (vacationHistory.DateTo - vacationHistory.DateFrom).Days + 1;
             vacationHistory.Type = VacationHistoryType.Request;
 
             if(!settings.NegativeBalance && user.VacationBalance - vacationHistory.Balance < 0)
@@ -64,8 +68,47 @@ namespace Hrm.Application.Services
                 throw new VacationRequestExeption("You don't have enough vacation balance");
             }
 
+            vacationHistory.IsAccepted = null;
+            user.VacationBalance -= vacationHistory.Balance;
+
             await _vacationHistoryRepository.AddAsync(vacationHistory);
+            await _userRepository.UpdateAsync(user);
             await _vacationHistoryRepository.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<VacantionAceptModel>> GetNotAcceptVacationAsync()
+        {
+            var notAcceptVacationList = await _vacationHistoryRepository
+                .Query()
+                .Include(x => x.User)
+                .Where(x => x.Type == VacationHistoryType.Request && x.IsAccepted == null)
+                .Select(x => new VacantionAceptModel()
+                {
+                    UserId = x.UserId,
+                    UserName = x.User.GetFullNameWithPosition(),
+                    VacationRequest = _mapper.Map<VacationHistoryModel>(x)
+                })
+                .ToListAsync();
+
+            return notAcceptVacationList;
+        }
+
+        public async Task AcceptVacationAsync(int vacationId, bool isAccept)
+        {
+            var vacation = await _vacationHistoryRepository
+                .Query()
+                .Include(x => x.User)
+                .FirstOrDefaultAsync(x => x.Id == vacationId);
+
+            vacation.IsAccepted = isAccept;
+
+            if (!isAccept)
+            {
+                vacation.User.VacationBalance += vacation.Balance;           
+            }
+
+            await _vacationHistoryRepository.UpdateAsync(vacation);
+            await _userRepository.SaveChangesAsync();
         }
     }
 }

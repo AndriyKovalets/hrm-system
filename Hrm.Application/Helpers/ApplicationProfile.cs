@@ -39,9 +39,11 @@ namespace Hrm.Application.Helpers
             CreateMap<User, Domain.ViewModels.Account.Profile>();
 
             CreateMap<User, VacationFullInfoModel>()
-                .ForMember(dest => dest.UserId, act => act.MapFrom(src => src.Id));
+                .ForMember(dest => dest.UserId, act => act.MapFrom(src => src.Id))
+                .ForMember(dest => dest.UserName, act => act.MapFrom(src => src.GetFullNameWithPosition()));
 
             CreateMap<VacationHistory, VacationHistoryModel>();
+                
             CreateMap<VacationHistoryModel, VacationHistory>();
 
             CreateMap<NewShortInfoModel, New>()

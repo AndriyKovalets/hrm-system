@@ -23,32 +23,7 @@
                 <h5 class="card-title">Vacantion History</h5>
             </div>
             <div class="card-body">
-                @if (Model.VacationHistories is not null)
-                {
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th scope="col">Balance</th>
-                                <th scope="col">Type</th>
-                                <th scope="col">Description</th>
-                                <th scope="col">Accepte</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                            @foreach (var history in Model?.VacationHistories)
-                            {
-                                <tr>
-                                    <td>@history.Balance</td>
-                                    <td>@history.Type</td>
-                                    <td>@history.Description</td>
-                                    <td>@history.IsAccepted</td>
-                                </tr>
-                            }
-
-                        </tbody>
-                    </table>
-                }
+                @(await Html.PartialAsync("_VacantionHistoryCard", Model.VacationHistories))
             </div>
         </div>
     </div>

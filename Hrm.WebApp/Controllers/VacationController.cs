@@ -39,5 +39,26 @@ namespace Hrm.WebApp.Controllers
 
             return RedirectToAction("Index");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Management()
+        {
+            var notAcceptedVacancy = await  _vacationService.GetNotAcceptVacationAsync();
+            return View(notAcceptedVacancy);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Accept(int vacationId, bool isAccept)
+        {
+            await _vacationService.AcceptVacationAsync(vacationId, isAccept);
+            return RedirectToAction("Management");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> History(string userId)
+        {
+            var vacationFulInfo = await _vacationService.GetVacationFullInfoAsync(userId);
+            return View(vacationFulInfo);
+        }
     }
 }

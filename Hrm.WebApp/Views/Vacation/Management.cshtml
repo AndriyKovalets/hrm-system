@@ -1,0 +1,46 @@
+﻿@model IEnumerable<Hrm.Domain.ViewModels.Vacation.VacantionAceptModel>
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Vacancy management";
+}
+
+<div class="card-header d-flex justify-content-between">
+    <h5 class="card-title">Vacantion Management</h5>
+</div>
+<div class="card-body">
+    @if (Model is not null)
+    {
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Employee</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Days</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Accepte</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.UserName</td>
+                        <td>@item.VacationRequest.DateFrom.ToShortDateString() - @item.VacationRequest.DateTo.ToShortDateString()</td>
+                        <td>@item.VacationRequest.Balance</td>
+                        <td>@item.VacationRequest.Description</td>
+                        <td>
+                            <div class="form-group">
+                                <a class="btn btn-success mt-4" asp-controller="Vacation" asp-action="Accept"
+                                    asp-route-vacationId = "@item.VacationRequest.Id" asp-route-isAccept = "true">Accept</a>
+                                <a class="btn btn-danger mt-4" asp-controller="Vacation" asp-action="Accept"
+                                   asp-route-vacationId="@item.VacationRequest.Id" asp-route-isAccept="false">Deny</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    }
+</div>

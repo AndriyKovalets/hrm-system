@@ -1,0 +1,44 @@
+﻿@model IEnumerable<Hrm.Domain.ViewModels.Vacation.VacationHistoryModel>
+
+@if (Model is not null)
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Days</th>
+                <th scope="col">Type</th>
+                <th scope="col">Description</th>
+                <th scope="col">Accepte</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var history in Model)
+            {
+                <tr>
+                    <td>@history.DateFrom.ToShortDateString() - @history.DateTo.ToShortDateString()</td>
+                    <td>@history.Balance</td>
+                    <td>@history.Type</td>
+                    <td>@history.Description</td>
+                    @{
+                        if (history.IsAccepted == true)
+                        {
+                            <td>Accepded</td>
+                        }
+                        if (history.IsAccepted == false)
+                        {
+                            <td>Not accepded</td>
+                        }
+                        if (history.IsAccepted == null)
+                        {
+                            <td>Pending</td>
+                        }
+                    }
+
+                </tr>
+            }
+
+        </tbody>
+    </table>
+}

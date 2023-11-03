@@ -36,6 +36,12 @@
                         @if (ViewContext.HttpContext.User.IsInRole(SystemRoles.Admin) || ViewContext.HttpContext.User.IsInRole(SystemRoles.Manager))
                         {
                             <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Vacation" asp-action="Management">Vacation Management</a>
+                            </li>
+                        }
+                        @if (ViewContext.HttpContext.User.IsInRole(SystemRoles.Admin) || ViewContext.HttpContext.User.IsInRole(SystemRoles.Manager))
+                        {
+                            <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Settings" asp-action="Index">Settings</a>
                             </li>
                         }

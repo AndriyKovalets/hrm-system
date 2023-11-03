@@ -10,6 +10,6 @@ namespace Hrm.Domain.ViewModels.Vacation
         public DateTime DateTo { get; set; }
         public double Balance { get; set; }
         public string? Description { get; set; }
-        public bool IsAccepted { get; set; }
+        public bool? IsAccepted { get; set; }
     }
 }
