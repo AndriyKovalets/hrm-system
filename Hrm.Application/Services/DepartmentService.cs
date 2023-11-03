@@ -53,6 +53,7 @@ namespace Hrm.Application.Services
             
             department.Name = departmentEditMpdel.Name;
             department.Description = departmentEditMpdel.Description;
+            department.MinEmployeeNeed = departmentEditMpdel.MinEmployeeNeed;
 
             await _departmentRepository.UpdateAsync(department);
             await _departmentRepository.SaveChangesAsync();
@@ -94,6 +95,7 @@ namespace Hrm.Application.Services
                 Name = department?.Name,
                 Description = department?.Description,
                 DateCreate = department.DateCreate,
+                MinEmployeeNeed = department.MinEmployeeNeed,
                 ManagerId = department?.Users?.FirstOrDefault(x => x.DepartmentRole == DepartmentRolesEnum.Manager)?.Id,
                 ParentDepartmentId = department?.ParentDepartamentId,
                 UserIds = department?.Users?.Where(x => x.DepartmentRole != DepartmentRolesEnum.Manager)?.Select(x => x.Id)

@@ -16,6 +16,10 @@
        
         <p class="card-text">Parent Department: @(Model.ParentDepartmentName ?? "-")</p>
         <p class="card-text">Descriotion: @Model.Description</p>
+        @if (Model.MinEmployeeNeed.HasValue)
+        {
+            <p class="card-text">Min employee need: @Model.MinEmployeeNeed</p>
+        }
         
         @if (Model.ManagerName is not null)
         {

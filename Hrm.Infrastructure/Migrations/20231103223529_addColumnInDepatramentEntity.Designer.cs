@@ -4,6 +4,7 @@ using Hrm.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hrm.Infrastructure.Migrations
 {
     [DbContext(typeof(HrmDbContext))]
-    partial class HrmDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231103223529_addColumnInDepatramentEntity")]
+    partial class addColumnInDepatramentEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,7 +39,7 @@ namespace Hrm.Infrastructure.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("MinEmployeeNeed")
+                    b.Property<int?>("MinEmployeeInVacation")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")

@@ -12,6 +12,8 @@ namespace Hrm.Domain.ViewModels.Departament
 
         [Required]
         public string? Description { get; set; }
+        [DisplayName("Min employee need")]
+        public int? MinEmployeeNeed { get; set; }
 
         [DisplayName("Parent Department")]
         public int? ParentDepartmentId { get; set; }

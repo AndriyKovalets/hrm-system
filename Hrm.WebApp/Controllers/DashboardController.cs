@@ -12,11 +12,13 @@ namespace Hrm.WebApp.Controllers
     {
         private readonly IConfiguration _configuration;
         private readonly INewService _newService;
+        private readonly IVacationService _vacationService;
 
-        public DashboardController(IConfiguration configuration, INewService newService)
+        public DashboardController(IConfiguration configuration, INewService newService, IVacationService vacationService)
         {
             _configuration = configuration;
             _newService = newService;
+            _vacationService = vacationService;
         }
 
         [HttpGet]
@@ -28,10 +30,11 @@ namespace Hrm.WebApp.Controllers
             }
 
             var lastNews = await _newService.GetNewsListAsync(3);
-
+            var todayInVacation = await _vacationService.TodayInVacationAsync();
             var dashboardModel = new DashboardModel()
             {
-                LastNews = lastNews
+                LastNews = lastNews,
+                TodayInVacation = todayInVacation
             };
 
             return View(dashboardModel);

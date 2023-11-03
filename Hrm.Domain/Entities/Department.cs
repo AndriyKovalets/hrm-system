@@ -8,6 +8,7 @@ namespace Hrm.Domain.Entities
         public string? Name { get; set; }
         public string? Description { get; set; }
         public DateTime DateCreate { get; set; }
+        public int? MinEmployeeNeed { get; set; }
         public int? ParentDepartamentId { get; set; }
         public Department? ParentDepartment { get; set; }
         public ICollection<User>? Users { get; set; }

@@ -132,5 +132,26 @@ namespace Hrm.Application.Services
             
             return currentVacationList;
         }
+
+        public async Task<IEnumerable<VacantionAceptModel>> TodayInVacationAsync()
+        {
+            var today = DateTime.Now.Date;
+
+            var currentVacationList = await _vacationHistoryRepository
+                .Query()
+                .Include(x => x.User)
+                .Where(x => x.Type == VacationHistoryType.Request && x.IsAccepted == true &&
+                    x.DateFrom.Date >= today && x.DateTo.Date <= today)
+                .OrderBy(x => x.DateFrom)
+                .Select(x => new VacantionAceptModel()
+                {
+                    UserId = x.UserId,
+                    UserName = x.User.GetFullNameWithPosition(),
+                    VacationRequest = _mapper.Map<VacationHistoryModel>(x)
+                })
+                .ToListAsync();
+
+            return currentVacationList;
+        }
     }
 }
