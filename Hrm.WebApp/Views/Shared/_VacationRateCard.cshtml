@@ -1,0 +1,35 @@
+﻿@model IEnumerable<Hrm.Domain.ViewModels.Vacation.VacationRateModel>
+@if (Model is not null && Model.Count() > 0)
+{
+    <div class="card mb-4 mb-xl-0">
+        <div class="card-header">
+            <h5 class="card-title">Vacation Rates</h5>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Date</th>
+                        <th scope="col">Days</th>
+                        <th scope="col">Rate</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var rate in Model)
+                    {
+                        <tr>
+                            <td>@rate.DateFrom.ToShortDateString() - @rate.DateTo.ToShortDateString()</td>
+                            <td>@((rate.DateTo.Date - rate.DateFrom.Date).Days + 1)</td>
+                            <td>@rate.Rate</td>
+                            <td><a class="btn btn-danger" asp-controller="Vacation" asp-action="DeleteRate" asp-route-id ="@rate.Id"><i class="bi bi-trash3"></i></a></td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+

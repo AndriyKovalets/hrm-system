@@ -16,17 +16,20 @@ namespace Hrm.Application.Services
         private readonly IRepository<User> _userRepository;
         private readonly IRepository<VacationHistory> _vacationHistoryRepository;
         private readonly ISettingsService _settinsService;
+        private readonly IRepository<VacationRate> _vacationRateRepository;
 
         public VacationService(
             IMapper mapper,
             IRepository<User> userRepository,
             IRepository<VacationHistory> vacationHistoryRepository,
-            ISettingsService settinsService)
+            ISettingsService settinsService,
+            IRepository<VacationRate> vacationRateRepository)
         {
             _mapper = mapper;
             _userRepository = userRepository;
             _vacationHistoryRepository = vacationHistoryRepository;
             _settinsService = settinsService;
+            _vacationRateRepository = vacationRateRepository;
         }
 
         public async Task<VacationFullInfoModel> GetVacationFullInfoAsync(string userId)
@@ -42,7 +45,7 @@ namespace Hrm.Application.Services
             return _mapper.Map<VacationFullInfoModel>(vacationInfo);
         }
 
-        public async Task AddVacationRequest(VacationRequesModel vacationRequest)
+        public async Task AddVacationRequestAsync(VacationRequesModel vacationRequest)
         {
             var settings = await _settinsService.GetVacationSettingsAsync();
 
@@ -152,6 +155,34 @@ namespace Hrm.Application.Services
                 .ToListAsync();
 
             return currentVacationList;
+        }
+
+        public async Task AddVacationRateAsync(VacationRateModel vacationRate, string userId)
+        {
+            var rateToInsert = _mapper.Map<VacationRate>(vacationRate);
+            rateToInsert.UserId = userId;
+
+            await _vacationRateRepository.AddAsync(rateToInsert);
+            await _vacationRateRepository.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<VacationRateModel>> GetVacationRatesAsync(string userId)
+        {
+            var userVacationRatesList = await _vacationRateRepository
+                .Query()
+                .Where(x => x.UserId == userId)
+                .ToListAsync();
+
+            return _mapper.Map<IEnumerable<VacationRateModel>>(userVacationRatesList);
+        }
+
+        public async Task DeleteVacationRatesAsync(int rateId)
+        {
+            var rate = await _vacationRateRepository
+                .GetByKeyAsync(rateId);
+
+            await _vacationRateRepository.DeleteAsync(rate);
+            await _vacationRateRepository.SaveChangesAsync();          
         }
     }
 }

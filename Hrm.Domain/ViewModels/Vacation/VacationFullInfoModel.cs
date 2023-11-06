@@ -6,5 +6,6 @@
         public string? UserName { get; set; }
         public double VacationBalance { get; set; }
         public IEnumerable<VacationHistoryModel>? VacationHistories { get; set; }
+        public IEnumerable<VacationRateModel>? VacationRates { get; set; }
     }
 }

@@ -1,19 +1,17 @@
 ﻿using Hrm.Domain.ViewModels.Vacation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Hrm.Application.Abstractions.Services
 {
     public interface IVacationService
     {
         Task AcceptVacationAsync(int vacationId, bool isAccept);
-        Task AddVacationRequest(VacationRequesModel vacationRequest);
+        Task AddVacationRateAsync(VacationRateModel vacationRate, string userId);
+        Task AddVacationRequestAsync(VacationRequesModel vacationRequest);
+        Task DeleteVacationRatesAsync(int rateId);
         Task<IEnumerable<VacantionAceptModel>> GetCurrentVacationAsync();
         Task<IEnumerable<VacantionAceptModel>> GetNotAcceptVacationAsync();
         Task<VacationFullInfoModel> GetVacationFullInfoAsync(string userId);
+        Task<IEnumerable<VacationRateModel>> GetVacationRatesAsync(string userId);
         Task<IEnumerable<VacantionAceptModel>> TodayInVacationAsync();
     }
 }

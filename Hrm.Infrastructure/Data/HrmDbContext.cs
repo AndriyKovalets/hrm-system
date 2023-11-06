@@ -1,7 +1,6 @@
 ﻿using Hrm.Domain.Entities;
 using Hrm.Infrastructure.Data.Configurations;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 namespace Hrm.Infrastructure.Data

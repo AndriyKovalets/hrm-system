@@ -13,10 +13,16 @@
             <div class="card-body text-center">
                 <h5 class="card-title">Vacation balance: @Model.VacationBalance</h5>
                 <a class="btn btn-primary mt-4" asp-controller="Vacation" asp-action="VacationRequest">Request</a>
-
             </div>
         </div>
+        <div class="text-center">
+            <a class="btn btn-primary mt-2" asp-controller="Vacation" asp-action="AddRate">Add Vacation Rate</a>
+        </div>
+        <div class="mt-2">
+            @(await Html.PartialAsync("_VacationRateCard", Model.VacationRates))
+        </div>
     </div>
+
     <div class="col-xl-8">
         <div class="card mb-4">
             <div class="card-header d-flex justify-content-between">

@@ -65,6 +65,12 @@ namespace Hrm.Application.Helpers
             CreateMap<Document, DocumentFullInfoModel>()
                 .ForMember(dest => dest.CreatorName, act => act.MapFrom(src => src.Creator.GetFullName()))
                 .ForMember(dest => dest.CreatorId, act => act.MapFrom(src => src.CreatorId));
+
+            CreateMap<VacationRate, VacationRateModel>()
+                .ForMember(dest => dest.CrerateAt, act => act.MapFrom(src => DateTime.Now))
+               .ForMember(dest => dest.UserName, act => act.MapFrom(src => src.User.GetFullNameWithPosition()));
+
+            CreateMap<VacationRateModel, VacationRate>();  
         }
     }
 }

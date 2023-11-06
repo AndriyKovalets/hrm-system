@@ -22,6 +22,8 @@ namespace Hrm.WebApp.Controllers
         public async Task<IActionResult> Index()
         {
             var vacationFulInfo = await _vacationService.GetVacationFullInfoAsync(UserId);
+            vacationFulInfo.VacationRates = await _vacationService.GetVacationRatesAsync(UserId);
+
             return View(vacationFulInfo);
         }
 
@@ -35,7 +37,7 @@ namespace Hrm.WebApp.Controllers
         public async Task<IActionResult> VacationRequest(VacationRequesModel vacationRequest)
         {
             vacationRequest.UserId = UserId;
-            await _vacationService.AddVacationRequest(vacationRequest);
+            await _vacationService.AddVacationRequestAsync(vacationRequest);
 
             return RedirectToAction("Index");
         }
@@ -67,6 +69,28 @@ namespace Hrm.WebApp.Controllers
             var curentVacationList = await _vacationService.GetCurrentVacationAsync();
 
             return View(curentVacationList);
+        }
+
+        [HttpGet]
+        public IActionResult AddRate()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddRate(VacationRateModel model)
+        {
+            await _vacationService.AddVacationRateAsync(model, UserId);
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> DeleteRate(int id)
+        {
+            await _vacationService.DeleteVacationRatesAsync(id);
+
+            return RedirectToAction("Index");
         }
     }
 }
