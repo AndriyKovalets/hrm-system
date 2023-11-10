@@ -15,6 +15,8 @@ namespace Hrm.Domain.ViewModels.Vacation
         public DateTime DateTo { get; set; }
         [Required]
         public int Rate { get; set; }
+        [Required]
+        public int Days { get; set; }
         public string? UserId { get; set; }
         public string? UserName { get; set; }
     }

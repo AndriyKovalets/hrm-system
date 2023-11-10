@@ -21,7 +21,7 @@
                     {
                         <tr>
                             <td>@rate.DateFrom.ToShortDateString() - @rate.DateTo.ToShortDateString()</td>
-                            <td>@((rate.DateTo.Date - rate.DateFrom.Date).Days + 1)</td>
+                            <td>@rate.Days</td>
                             <td>@rate.Rate</td>
                             <td><a class="btn btn-danger" asp-controller="Vacation" asp-action="DeleteRate" asp-route-id ="@rate.Id"><i class="bi bi-trash3"></i></a></td>
                         </tr>

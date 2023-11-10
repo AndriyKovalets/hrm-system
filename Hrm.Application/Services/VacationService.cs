@@ -17,19 +17,22 @@ namespace Hrm.Application.Services
         private readonly IRepository<VacationHistory> _vacationHistoryRepository;
         private readonly ISettingsService _settinsService;
         private readonly IRepository<VacationRate> _vacationRateRepository;
+        private readonly IRepository<VacationPlan> _vacationPlanRepository;
 
         public VacationService(
             IMapper mapper,
             IRepository<User> userRepository,
             IRepository<VacationHistory> vacationHistoryRepository,
             ISettingsService settinsService,
-            IRepository<VacationRate> vacationRateRepository)
+            IRepository<VacationRate> vacationRateRepository,
+            IRepository<VacationPlan> vacationPlanRepository)
         {
             _mapper = mapper;
             _userRepository = userRepository;
             _vacationHistoryRepository = vacationHistoryRepository;
             _settinsService = settinsService;
             _vacationRateRepository = vacationRateRepository;
+            _vacationPlanRepository = vacationPlanRepository;
         }
 
         public async Task<VacationFullInfoModel> GetVacationFullInfoAsync(string userId)
@@ -183,6 +186,27 @@ namespace Hrm.Application.Services
 
             await _vacationRateRepository.DeleteAsync(rate);
             await _vacationRateRepository.SaveChangesAsync();          
+        }
+
+        public async Task<IEnumerable<VacationPlanModel>> GetVacationPlanAsync()
+        {
+            var plan = await _vacationPlanRepository
+                .Query()
+                .Include(x => x.User)
+                .ToListAsync();
+
+            return _mapper.Map<IEnumerable<VacationPlanModel>>(plan);
+        }
+
+        public async Task<IEnumerable<VacationPlanModel>> GetVacationPlanForUserAsync(string userId)
+        {
+            var plan = await _vacationPlanRepository
+                .Query()
+                .Include(x => x.User)
+                .Where(x => x.UserId == userId && x.DateTo.Date >= DateTime.Now.Date)
+                .ToListAsync();
+
+            return _mapper.Map<IEnumerable<VacationPlanModel>>(plan.DistinctBy(x => new { x.DateFrom, x.DateTo}));
         }
     }
 }

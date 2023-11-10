@@ -4,5 +4,6 @@
     {
         public const string OrganozationName = "OrganozationName";
         public const string VacationSettings = "VacationSettings";
+        public const string VacationPlanSettings = "VacationPlanSettings";
     }
 }

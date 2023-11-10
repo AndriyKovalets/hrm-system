@@ -23,7 +23,7 @@ namespace Hrm.Domain.Entities
         public IEnumerable<VacationHistory>? VacationHistories { get; set; }
         public IEnumerable<Document>? Documents { get; set; }
         public IEnumerable<VacationPlan>? VacationPlans { get; set; }
-        public IEnumerable<VacationRate>? VacationRates { get; set; }
+        public IEnumerable<VacationRate>? VacationRates { get; set; } = new List<VacationRate>();
 
         public string GetFullName()
         {

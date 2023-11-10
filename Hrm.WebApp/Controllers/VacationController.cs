@@ -10,10 +10,12 @@ namespace Hrm.WebApp.Controllers
     public class VacationController : Controller
     {
         private readonly IVacationService _vacationService;
+        private readonly IVacationPlanService _vacationPlanService;
 
-        public VacationController(IVacationService vacationService)
+        public VacationController(IVacationService vacationService, IVacationPlanService vacationPlanService)
         {
             _vacationService = vacationService;
+            _vacationPlanService = vacationPlanService;
         }
 
         private string UserId => User.FindFirst(ClaimTypes.NameIdentifier).Value;
@@ -28,8 +30,9 @@ namespace Hrm.WebApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult VacationRequest()
+        public  async Task<IActionResult> VacationRequest()
         {
+            ViewBag.Plan = await _vacationService.GetVacationPlanForUserAsync(UserId);
             return View();
         }
 
@@ -91,6 +94,21 @@ namespace Hrm.WebApp.Controllers
             await _vacationService.DeleteVacationRatesAsync(id);
 
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Plan()
+        {
+            var planList = await _vacationService.GetVacationPlanAsync();
+            return View(planList);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GeneratePlan()
+        {
+            await _vacationPlanService.CreateVacationPlanAsync();
+
+            return View("Plan");
         }
     }
 }

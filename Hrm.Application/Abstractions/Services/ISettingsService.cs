@@ -11,5 +11,6 @@ namespace Hrm.Application.Abstractions.Services
         Task<VacationSettingsModel?> GetVacationSettingsAsync();
         Task EditVaccinationSettings(VacationSettings settings);
         IEnumerable<SelectListItem> GetPeriodList(DepartmentRolesEnum? selectDepartmenRole = null);
+        Task<VacationPlanSettings?> GetVacationPlanSettingsAsync();
     }
 }

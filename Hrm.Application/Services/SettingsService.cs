@@ -38,6 +38,20 @@ namespace Hrm.Application.Services
             return JsonSerializer.Deserialize<VacationSettingsModel>(result?.Settings ?? "{}");
         }
 
+        public async Task<VacationPlanSettings?> GetVacationPlanSettingsAsync()
+        {
+            var result = await _settingsRepository
+                .Query()
+                .FirstOrDefaultAsync(x => x.Name == OrganizationSettingsName.VacationPlanSettings);
+
+            if(string.IsNullOrEmpty(result?.Settings))
+            {
+                return new VacationPlanSettings();
+            }
+
+            return JsonSerializer.Deserialize<VacationPlanSettings>(result?.Settings ?? "{}");
+        }
+
         public async Task EditVaccinationSettings(VacationSettings settings)
         {
             var settingsFromDb = await _settingsRepository

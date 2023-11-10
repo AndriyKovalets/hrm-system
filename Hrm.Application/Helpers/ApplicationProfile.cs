@@ -70,7 +70,10 @@ namespace Hrm.Application.Helpers
                 .ForMember(dest => dest.CrerateAt, act => act.MapFrom(src => DateTime.Now))
                .ForMember(dest => dest.UserName, act => act.MapFrom(src => src.User.GetFullNameWithPosition()));
 
-            CreateMap<VacationRateModel, VacationRate>();  
+            CreateMap<VacationRateModel, VacationRate>();
+
+            CreateMap<VacationPlan, VacationPlanModel>()
+               .ForMember(dest => dest.UserName, act => act.MapFrom(src => src.User.GetFullNameWithPosition()));
         }
     }
 }

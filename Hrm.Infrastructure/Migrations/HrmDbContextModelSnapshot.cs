@@ -320,6 +320,9 @@ namespace Hrm.Infrastructure.Migrations
                     b.Property<DateTime>("DateTo")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("Days")
+                        .HasColumnType("int");
+
                     b.Property<int>("Rate")
                         .HasColumnType("int");
 

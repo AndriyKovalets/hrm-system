@@ -45,5 +45,19 @@
                 </div>
             </div>
         }
+
+        @if (ViewBag.Plan is not null)
+        {
+            <div class="mt-5 card-body">
+                <h4>Recommended periods for vacation</h4>
+                <ul class="list-group">
+                    @foreach (var item in ViewBag.Plan)
+                    {
+                        <li class="list-group-item">@item.DateFrom.ToShortDateString() - @item.DateTo.ToShortDateString()</li>
+                    }
+                   
+                </ul>
+            </div>
+        }
     </div>
 </div>
