@@ -1,4 +1,5 @@
 ﻿using Hrm.Application.Abstractions.Services;
+using Hrm.Domain.Models;
 using Hrm.Domain.Roles;
 using Hrm.Domain.ViewModels.Settings;
 using Microsoft.AspNetCore.Authorization;
@@ -23,15 +24,19 @@ namespace Hrm.WebApp.Controllers
             var vaccinationSettings = await _settingsService.GetVacationSettingsAsync() ?? new VacationSettingsModel();
             vaccinationSettings.PeriodSelectList = periodList;
 
+            var vaccinationPlanSettings = await _settingsService.GetVacationPlanSettingsAsync() ?? new VacationPlanSettings();
+
             var settingModel = new SettingsModel();
             settingModel.VaccinationSettings = vaccinationSettings;
+            settingModel.VacationPlanSettings = vaccinationPlanSettings;
 
             return View(settingModel);
         }
 
         public async Task<IActionResult> Edit(SettingsModel model)
         {
-            await _settingsService.EditVaccinationSettings(model.VaccinationSettings!);
+            await _settingsService.EditVacationSettings(model.VaccinationSettings!);
+            await _settingsService.EditVacationPlanSettings(model.VacationPlanSettings!);
 
             return RedirectToAction("Index");
         }

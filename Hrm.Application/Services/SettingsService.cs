@@ -52,7 +52,7 @@ namespace Hrm.Application.Services
             return JsonSerializer.Deserialize<VacationPlanSettings>(result?.Settings ?? "{}");
         }
 
-        public async Task EditVaccinationSettings(VacationSettings settings)
+        public async Task EditVacationSettings(VacationSettings settings)
         {
             var settingsFromDb = await _settingsRepository
                 .Query()
@@ -63,6 +63,29 @@ namespace Hrm.Application.Services
                 await _settingsRepository.AddAsync(new OrganizationSetting()
                 {
                     Name = OrganizationSettingsName.VacationSettings,
+                    Settings = JsonSerializer.Serialize(settings)
+                });
+            }
+            else
+            {
+                settingsFromDb.Settings = JsonSerializer.Serialize(settings);
+                await _settingsRepository.UpdateAsync(settingsFromDb);
+            }
+
+            await _settingsRepository.SaveChangesAsync();
+        }
+
+        public async Task EditVacationPlanSettings(VacationPlanSettings settings)
+        {
+            var settingsFromDb = await _settingsRepository
+                .Query()
+                .FirstOrDefaultAsync(x => x.Name == OrganizationSettingsName.VacationPlanSettings);
+
+            if (settingsFromDb is null)
+            {
+                await _settingsRepository.AddAsync(new OrganizationSetting()
+                {
+                    Name = OrganizationSettingsName.VacationPlanSettings,
                     Settings = JsonSerializer.Serialize(settings)
                 });
             }

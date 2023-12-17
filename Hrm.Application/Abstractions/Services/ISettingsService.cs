@@ -9,8 +9,9 @@ namespace Hrm.Application.Abstractions.Services
     {
         Task<string?> GetOrganizationName();
         Task<VacationSettingsModel?> GetVacationSettingsAsync();
-        Task EditVaccinationSettings(VacationSettings settings);
+        Task EditVacationSettings(VacationSettings settings);
         IEnumerable<SelectListItem> GetPeriodList(DepartmentRolesEnum? selectDepartmenRole = null);
         Task<VacationPlanSettings?> GetVacationPlanSettingsAsync();
+        Task EditVacationPlanSettings(VacationPlanSettings settings);
     }
 }

@@ -58,12 +58,14 @@ namespace Hrm.Application.Services
                         {
                             var newPeriod = Shift(new Period()
                             {
-                                DateFrom = employee.VacationRates.First().DateFrom,
-                                DateTo = employee.VacationRates.First().DateTo,
+                                DateFrom = employee.VacationRates!.First().DateFrom,
+                                DateTo = employee.VacationRates!.First().DateTo,
                             }, settings.StepA, false);
 
                             var employeeWithRates = employeeWithRateList.FirstOrDefault(x => x.Id == employee.Id);
-                            var rate = employee.VacationRates.FirstOrDefault(x => x.DateFrom >= newPeriod.DateFrom && x.DateTo <= newPeriod.DateTo);
+                            var rate = employeeWithRateList!.FirstOrDefault(x => x.Id == employee.Id)!
+                                .VacationRates!
+                                .FirstOrDefault(x => x.DateFrom >= newPeriod.DateFrom && x.DateTo <= newPeriod.DateTo);
 
                             if (rate != null)
                             {
@@ -77,9 +79,9 @@ namespace Hrm.Application.Services
                                 {
                                     rate
                                 };
+
                             }
                         }
-
                         var fitFunction = GetFitnessFunction(plan);
                         if(fitFunction > maxFitnessFunction)
                         {
@@ -123,7 +125,7 @@ namespace Hrm.Application.Services
                 }
 
 
-                if(maxFitnessFunction == maxRate)
+                if(maxFitnessFunction == maxRate || i == settings.Max)
                 {
                     break;
                 }
@@ -150,7 +152,7 @@ namespace Hrm.Application.Services
 
             foreach(var p in plan)
             {
-                sum += p.VacationRates.First().Rate;
+                sum += p.VacationRates!.First().Rate;
             }
 
             return sum;
@@ -176,7 +178,6 @@ namespace Hrm.Application.Services
         private List<User> GetPlan(IEnumerable<User> employeeWithVacationRate)
         {
             var currentPlan = new List<User>();
-
             foreach (var employee in employeeWithVacationRate)
             {
 

@@ -69,7 +69,7 @@ namespace Hrm.Application.Services
                 throw new VacationRequestExeption("You don't have enough vacation balance");
             }
             
-            if (settings.NegativeBalance && Math.Abs(user.VacationBalance - vacationHistory.Balance) < settings.MaxNegativeBalance)
+            if (settings.NegativeBalance && Math.Abs(user.VacationBalance - vacationHistory.Balance) > settings.MaxNegativeBalance)
             {
                 throw new VacationRequestExeption("You don't have enough vacation balance");
             }
@@ -147,7 +147,7 @@ namespace Hrm.Application.Services
                 .Query()
                 .Include(x => x.User)
                 .Where(x => x.Type == VacationHistoryType.Request && x.IsAccepted == true &&
-                    x.DateFrom.Date >= today && x.DateTo.Date <= today)
+                    x.DateFrom.Date <= today.Date && x.DateTo.Date >= today.Date)
                 .OrderBy(x => x.DateFrom)
                 .Select(x => new VacantionAceptModel()
                 {
