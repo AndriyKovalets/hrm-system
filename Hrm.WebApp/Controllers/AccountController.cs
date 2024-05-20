@@ -4,6 +4,7 @@ using Hrm.Domain.ViewModels.Account;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System.Security.Claims;
 
 namespace Hrm.WebApp.Controllers
@@ -13,21 +14,30 @@ namespace Hrm.WebApp.Controllers
         private readonly SignInManager<User> _signInManager;
         private readonly ISettingsService _settingsService;
         private readonly IAccountService _accountService;
+        private readonly IConfiguration _configuration;
 
         public AccountController(
             SignInManager<User> signInManager,
             ISettingsService settingsService,
-            IAccountService accountService)
+            IAccountService accountService,
+            IConfiguration configuration)
         {
             _signInManager = signInManager;
             _settingsService = settingsService;
             _accountService = accountService;
+            _configuration = configuration;
         }
 
         [HttpGet]
         public async Task<IActionResult> Login()
         {
-            ViewData["Title"] = await _settingsService.GetOrganizationName();
+
+            if (string.IsNullOrEmpty(_configuration.GetConnectionString("DefaultConnection")))
+            {
+                return RedirectToAction("Index", "Setup");
+            }
+
+            //ViewData["Title"] = await _settingsService.GetOrganizationName();
             return View();
         }
 

@@ -44,7 +44,7 @@ namespace Hrm.WebApp.Controllers
                 return View("Index", setupOrganization);
             }
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Dashboard");
 
 
         }
